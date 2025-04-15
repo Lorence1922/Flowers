@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triple Roses with Love Letter</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #fff9fb;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #c2185b;
+            margin: 0 0 30px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        .scene {
+            position: relative;
+            width: 900px;
+            height: 500px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+        }
+
+        .rose-container {
+            position: relative;
+            width: 100px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Rose stem */
+        .stem {
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to right, #2e7d32, #4caf50, #2e7d32);
+            bottom: 0;
+            height: 0;
+            transform-origin: bottom center;
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(46, 125, 50, 0.3);
+            animation: growStem 4s forwards;
+        }
+
+        @keyframes growStem {
+            0% { height: 0; }
+            100% { height: 300px; }
+        }
+
+        /* Rose leaves */
+        .leaf {
+            position: absolute;
+            width: 25px; /* Slightly narrower leaves */
+            height: 35px; /* Slightly shorter leaves */
+            background-color: #4caf50;
+            border-radius: 0 50% 50% 50%; /* More accurate leaf shape */
+            transform-origin: right center;
+            z-index: -1;
+        }
+
+        .leaf.left {
+            left: 0; /* Adjusted leaf positioning */
+            top: 150px; /* Adjusted leaf positioning */
+            transform: rotate(-25deg) scale(0); /* Slightly adjusted rotation */
+            animation: growLeafLeft 1s 3s forwards;
+        }
+
+        .leaf.right {
+            right: 0; /* Adjusted leaf positioning */
+            top: 120px; /* Adjusted leaf positioning */
+            transform: rotate(65deg) scale(0); /* Slightly adjusted rotation */
+            animation: growLeafRight 1s 3.5s forwards;
+        }
+
+        @keyframes growLeafLeft {
+            100% { transform: rotate(-25deg) scale(1); }
+        }
+
+        @keyframes growLeafRight {
+            100% { transform: rotate(65deg) scale(1); }
+        }
+
+        /* Rose bud */
+        .bud {
+            position: absolute;
+            width: 30px; /* Slightly smaller bud */
+            height: 30px; /* Slightly smaller bud */
+            bottom: 300px;
+            background: #e91e63;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: growBud 2s 4s forwards;
+            box-shadow: 0 0 15px rgba(233, 30, 99, 0.5);
+        }
+
+        @keyframes growBud {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Rose petals */
+        .petals {
+            position: absolute;
+            width: 100px; /* Increased width of the bloom */
+            height: 100px; /* Increased height of the bloom */
+            bottom: 270px; /* Adjusted vertical position */
+            transform: scale(0);
+            animation: bloom 3s 5s forwards;
+            /* Added perspective to give a 3D effect */
+            perspective: 200px;
+        }
+
+        .petal {
+            position: absolute;
+            background: linear-gradient(to bottom, #e91e63, #c2185b);
+            border-radius: 50% 50% 40% 50%; /* Adjusted border-radius for rose petal shape */
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            /* Added transition for smoother transformation */
+            transition: transform 0.2s ease;
+            transform-origin: center bottom; /* Important for rotation */
+        }
+
+        .petal:nth-child(1) {
+            width: 60px;
+            height: 60px;
+            left: 20px;
+            top: 10px;
+            transform: rotate(30deg);
+        }
+
+        .petal:nth-child(2) {
+            width: 55px;
+            height: 55px;
+            left: 10px;
+            top: 5px;
+            transform: rotate(10deg);
+        }
+
+        .petal:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            left: 25px;
+            top: 0;
+            transform: rotate(0deg);
+        }
+
+        .petal:nth-child(4) {
+            width: 55px;
+            height: 55px;
+            left: 30px;
+            top: 15px;
+            transform: rotate(-10deg);
+        }
+        .petal:nth-child(5) {
+            width: 60px;
+            height: 60px;
+            left: 15px;
+            top: 20px;
+            transform: rotate(-30deg);
+        }
+
+        @keyframes bloom {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); } /* Slightly larger bloom */
+            100% { transform: scale(1); }
+        }
+
+        /* Envelope */
+        .envelope-container {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%) translateY(50px) rotate(-5deg);
+            transition: transform 1s;
+            z-index: 10;
+            cursor: pointer;
+            animation: floatDownEnvelope 2s 7s forwards;
+        }
+
+        @keyframes floatDownEnvelope {
+            100% { transform: translateX(-50%) translateY(0) rotate(-5deg); }
+        }
+
+        .envelope-container.open {
+            transform: translateX(-50%) translateY(-80px) rotate(0deg);
+            z-index: 15;
+        }
+
+        .envelope {
+            position: relative;
+            width: 150px;
+            height: 100px;
+        }
+
+        .envelope-front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #f8bbd0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 2;
+            transform-origin: bottom;
+            transition: all 0.5s 0.3s;
+        }
+
+        .envelope-container.open .envelope-front {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            width: 100%;
+            height: 60%;
+            background: #f8bbd0;
+            border-radius: 8px 8px 0 0;
+            top: 0;
+            transform-origin: top;
+            transition: all 0.5s;
+            z-index: 3;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        }
+
+        .envelope-container.open .envelope-flap {
+            transform: rotateX(180deg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .envelope-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fce4ec;
+            border-radius: 8px;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .letter {
+            width: 90%;
+            height: 90%;
+            background: white;
+            border-radius: 5px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #333;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .instructions {
+            margin-top: 30px;
+            color: #c2185b;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeIn 1s 8s forwards;
+        }
+
+        @keyframes fadeIn {
+            100% { opacity: 1; }
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #e91e63;
+            transform: rotate(45deg);
+            top: 50px;
+            left: 50px;
+            opacity: 0;
+            animation: floatHearts 3s infinite;
+        }
+
+        .heart:before, .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #e91e63;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart:after {
+            top: 0;
+            left: -10px;
+        }
+
+        @keyframes floatHearts {
+            0% { transform: rotate(45deg) translateY(0) scale(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: rotate(45deg) translateY(-150px) scale(1); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <h1>A Bouquet for You</h1>
+
+    <div class="scene">
+        <div class="rose-container" style="transform: translateX(-150px);">
+            <div class="stem"></div>
+            <div class="leaf left"></div>
+            <div class="leaf right"></div>
+            <div class="bud"></div>
+            <div class="petals">
+                <div class="petal petal-1"></div>
+                <div class="petal petal-2"></div>
+                <div class="petal petal-3"></div>
+                <div class="petal petal-4"></div>
+                 <div class="petal petal-5"></div>
+            </div>
+        </div>
+
+        <div class="rose-container">
+            <div class="stem"></div>
+            <div class="leaf left"></div>
+            <div class="leaf right"></div>
+            <div class="bud"></div>
+            <div class="petals">
+                <div class="petal petal-1"></div>
+                <div class="petal petal-2"></div>
+                <div class="petal petal-3"></div>
+                <div class="petal petal-4"></div>
+                 <div class="petal petal-5"></div>
+            </div>
+        </div>
+
+        <div class="rose-container" style="transform: translateX(150px);">
+            <div class="stem"></div>
+            <div class="leaf left"></div>
+            <div class="leaf right"></div>
+            <div class="bud"></div>
+            <div class="petals">
+                <div class="petal petal-1"></div>
+                <div class="petal petal-2"></div>
+                <div class="petal petal-3"></div>
+                <div class="petal petal-4"></div>
+                <div class="petal petal-5"></div>
+            </div>
+        </div>
+
+        <div class="envelope-container" id="envelope">
+            <div class="envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-front"></div>
+                <div class="envelope-back">
+                    <div class="letter">
+                        <p>My Dearest Love,</p>
+                        <p>These roses, with their carefully shaped petals and gracefully unfurling form, are a reflection of my feelings for you.  Each delicate curve and vibrant shade echoes the beauty and tenderness I find in you.</p>
+                        <p>Just as these blooms open to reveal their full splendor, my love for you continues to expand, growing more profound and beautiful with each passing day.  You are the essence of my joy and the deepest desire of my heart.</p>
+                        <p>May these roses convey the depth of my affection and the sincerity of my heart.  Know that you are cherished, adored, and loved beyond measure.</p>
+                        <p>Yours eternally,</p>
+                        <p>💖💖💖</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="instructions">Click the envelope to unveil your heartfelt message</p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Envelope interaction
+            const envelopeContainer = document.getElementById('envelope');
+            envelopeContainer.addEventListener('click', function() {
+                envelopeContainer.classList.toggle('open');
+
+                // Create floating hearts when opened
+                if (envelopeContainer.classList.contains('open')) {
+                    createHearts();
+                }
+            });
+
+            // Create floating hearts
+            function createHearts() {
+                for (let i = 0; i < 7; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.className = 'heart';
+                        heart.style.left = `${Math.random() * 800 + 50}px`;
+                        heart.style.animationDelay = `${i * 0.4}s`;
+                        document.querySelector('.scene').appendChild(heart);
+
+                        // Remove heart after animation
+                        setTimeout(() => {
+                            heart.remove();
+                        }, 3000);
+                    }, i * 400);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
